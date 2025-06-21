@@ -50,8 +50,9 @@ export const mockValidatorMetadata: ValidatorMetadata[] = [
   },
 ];
 
+// Keys are now lowercase for case-insensitive lookup
 export const mockRewardInsightsData: Record<string, RewardInsights> = {
-  '0xAliceFEF3e2478789d87a698F8b87878f8F787E': {
+  '0xalicefef3e2478789d87a698f8b87878f8f787e': {
     walletAddress: '0xAliceFEF3e2478789d87a698F8b87878f8F787E',
     totalRestakingRewards: 1.5,
     rewardsBreakdown: [
@@ -59,7 +60,7 @@ export const mockRewardInsightsData: Record<string, RewardInsights> = {
       { id: 'reward2', validatorAddress: '0xValidatorAVSBeta8F8b87878f8F787EF8b8787E', rewardAmount: 0.5, timestamp: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString() },
     ],
   },
-  '0xBob78A698F8b87878f8F787EF8b87878f8F787E': {
+  '0xbob78a698f8b87878f8f787ef8b87878f8f787e': {
     walletAddress: '0xBob78A698F8b87878f8F787EF8b87878f8F787E',
     totalRestakingRewards: 3.2,
     rewardsBreakdown: [
@@ -71,7 +72,8 @@ export const mockRewardInsightsData: Record<string, RewardInsights> = {
 export const fetchMockRewardInsights = async (address: string): Promise<RewardInsights | null> => {
   return new Promise((resolve) => {
     setTimeout(() => {
-      resolve(mockRewardInsightsData[address] || null);
+      // Use lowercase for lookup to make it case-insensitive
+      resolve(mockRewardInsightsData[address.toLowerCase()] || null);
     }, 500); 
   });
 };

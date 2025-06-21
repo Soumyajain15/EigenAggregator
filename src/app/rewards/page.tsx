@@ -23,7 +23,8 @@ export default function RewardsPage() {
 
   const handleFetchRewards = async (e?: React.FormEvent<HTMLFormElement>) => {
     if (e) e.preventDefault();
-    if (!walletAddress.trim()) {
+    const trimmedAddress = walletAddress.trim();
+    if (!trimmedAddress) {
       toast({
         title: "Validation Error",
         description: "Please enter a wallet address.",
@@ -36,18 +37,18 @@ export default function RewardsPage() {
     setRewardsData(null);
     setHasSearched(true); 
     try {
-      const data = await fetchMockRewardInsights(walletAddress);
+      const data = await fetchMockRewardInsights(trimmedAddress);
       if (data) {
         setRewardsData(data);
          toast({
-          title: "Rewards Fetched",
-          description: `Successfully fetched rewards for wallet address.`,
+          title: "Success",
+          description: `Successfully fetched rewards for ${data.walletAddress}.`,
         });
       } else {
-        // setError will not be set here, rewardsData will remain null
+        setRewardsData(null);
         toast({
           title: "No Data Found",
-          description: `No reward data found for the entered wallet address.`,
+          description: `No reward data found for the address: ${trimmedAddress}`,
           variant: "default",
         });
       }
@@ -96,7 +97,7 @@ export default function RewardsPage() {
                     type="text"
                     id="walletAddress"
                     name="walletAddress"
-                    placeholder="e.g., 0xAliceFEF3e2478789d87a698F8b87878f8F787E"
+                    placeholder="e.g., 0xalicefef3e2478789d87a698f8b87878f8f787e"
                     value={walletAddress}
                     onChange={(e) => {
                       setWalletAddress(e.target.value);
